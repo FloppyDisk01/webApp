@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html ng-app = 'todoApp'>
+	<head>
+		<meta charset="utf-8" />
+		<title>Hello World</title>
+
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"> -->
+        <script src="angular.min.js"></script>
+	</head>
+	<body>
+        <div ng-controller="testContrl">
+            <h2> controlleur </h2>
+            Votre prénom : <input type='text' ng-model='firstName'>
+            <br/>
+            <br/>
+            Hello {{firstName}} ! <br/>
+            Hello <span ng-bind='firstName'></span>
+            <br/>
+            <br/>
+            <button ng-click="modifyFirstName()">modifier le nom</button>
+        </div>
+
+        <div ng-controller="testContrl">
+            <h2> controlleur2</h2>
+            Hello {{firstName}}
+        </div>
+
+        <script>
+            var todoApp = angular.module('todoApp', []);
+            
+            todoApp.controller('testContrl', ['$scope', function($scope){
+                $scope.modifyFirstName = function(){
+                    $scope.firstName = 'test';
+                }
+            }]);
+
+            todoApp.controller('Test2Ctrl', ['$scope'], function($scope){
+                $scope.firstName="je suis le nom 2"
+            })
+        </script>
+		
+	</body>
+</html>
