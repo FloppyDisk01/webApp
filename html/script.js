@@ -27,7 +27,7 @@ function validateForm(e) {
 			}
 		}
 		else if(x[i].value.length <= 3){
-			console.log("champs incomplets" + x[i].id);
+			console.log("champs incomplets : " + x[i].id);
 			e.preventDefault();
 		}
 	}
