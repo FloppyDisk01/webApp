@@ -1,0 +1,24 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "package of todo list site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FloppyDisk01/webApp/tree/master/toDo"
+  },
+  "keywords": [
+    "toDo"
+  ],
+  "author": "aurélien Filatre",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.17",
+    "morgan": "^1.9.1"
+  }
+}
