@@ -50,8 +50,8 @@ var appRoute = function(app){
   //création de list
   app.post('/api/createList', function(req, res) {
     data = {
-      nomListe = req.body.name
-      createur = req.body.auth
+      nomListe : req.body.name,
+      createur : req.body.auth
     }
     dataLayer.addList(data, function(err){
       if(err) res.send(err);
