@@ -1,0 +1,18 @@
+<!doctype html>
+
+<html ng-app="Login">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>toDo - login</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="index.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-controller="loginController">
+  <h1>toDo List - Login</h1>
+  <input type="text" ng-model="userName" placeholder="nom d'utilisateur">  <input type="password" ng-model="password" placeholder="mot de passe">
+  <br/>
+  <button type = "submit" ng-click="login()"> se connecter </button> <br/>
+  <button type = "submit" ng-click="register()"> s'enregistrer </button>
+</body>
