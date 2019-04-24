@@ -10,7 +10,7 @@ var appRoute = function(app){
   //creation de l'utilisateur
   app.post('/createUser/', function(req, res){
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-      var user = {
+      var userToCreate = {
         userName : req.body.userName,
         password : hash,
       }
@@ -19,7 +19,7 @@ var appRoute = function(app){
         if(user){
           console.log("user deja existant");
         } else {
-          dataLayer.createUser(user, function(err){
+          dataLayer.createUser(userToCreate, function(err){
             if(err) res.send(err);
           });
         }
@@ -33,7 +33,11 @@ var appRoute = function(app){
       if(err) res.send(err);
       if(user){
         bcrypt.compare(req.body.password, user.password, function(err, check) {
-          if(check) res.send(true)
+          console.log(check);
+          if(check){
+            res.send(true);
+            console.log('good id bro');
+          }
         });
       }
     });
@@ -47,7 +51,7 @@ var appRoute = function(app){
     });
   });
 
-  //création de list
+  //création de liste
   app.post('/api/createList', function(req, res) {
     data = {
       nomListe : req.body.name,
@@ -64,7 +68,8 @@ var appRoute = function(app){
   //modification de Liste
   app.put('/api/modifyList', function(req, res) {
     data = {
-
+      nomListe : req.body.name,
+      createur : req.body.auth
     }
     dataLayer.modifyList(req.body._id, data, function(err){
       if(err) res.send(err);

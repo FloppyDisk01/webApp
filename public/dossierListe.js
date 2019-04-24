@@ -1,7 +1,7 @@
 // public/core.js
 var ListeaFaire = angular.module('ListeaFaire', ['ngCookies']);
 
-function mainController($scope, $http, $cookies) {
+function folderControler($scope, $http, $cookies) {
     $scope.formData = {};
 
     // when landing on the page, get all todos and show them

@@ -20,6 +20,7 @@ var dataLayer = {
     },
 
     createUser: function(user,cb){
+      console.log('est ce que ce truc sert a qqch ?');
       db.collection(userCol).insertOne(user, function(err){
         if(err) throw err;
         cb();
@@ -27,8 +28,8 @@ var dataLayer = {
     },
 
     getUser: function(userName,cb){
+      console.log('on cherche si '+userName+' existe');
       db.collection(userCol).findOne({userName},function(err, res){
-        console.log(res);
         if(err) throw err;
         cb(err, res);
       });
