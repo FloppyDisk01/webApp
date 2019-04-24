@@ -1,0 +1,48 @@
+<!doctype html>
+	<HEAD>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="script.js"></script>
+	</HEAD>
+	<BODY>
+		<h2>What Can JavaScript Do?</h2>
+
+		<p>JavaScript can change HTML attribute values.</p>
+
+		<p>In this case JavaScript changes the value of the src (source) attribute of an image.</p>
+
+		<button id="bouton" onclick="switchLight()">Turn on the light</button>
+
+		<img id="myImage" src="pic_bulboff.gif" style="width:100px">
+
+		</br> 
+
+		<form id="info">
+			<fieldset>
+				<legend>Personal information:</legend>
+				nom : <input type="text" class="checkable" id="nom" value=""></br>
+				prénom : <input type="text" class="checkable" id="prenom" value=""></br>
+				age : <input type="text" class="checkableParticulier" id="age" value=""></br>
+				pseudo : <input type="text" class="checkable" id="pseudo" value=""></br> 
+				mot de passe : <input type="password" class="checkable" id="password" value=""></br>
+				confirmer mot de passe : <input type="password" class="checkable" id="Cpassword" value=""></br>
+				nationalité :
+				<SELECT>
+					<option>france</a></option>
+					<option>japon</a></option>
+					<option>algérie</a></option>
+					<option>Lieschtechtein</a></option>
+				</SELECT> </br>
+				genre : </br>
+				<input type="radio" class="checkableParticulier" name="genre" id="male"> homme
+				<input type="radio" class="checkableParticulier" name="genre" id="female"> femme
+			</fieldset>
+			<input type="checkbox" id="cookie" value=""> je désire recevoir la newsletter tout les mois </br>
+
+			<input type="submit" name="submit" value="valider">
+			<input type="reset" value="réinitialiser formulaire">
+		</form>
+	</BODY>
+	<FOOTER>
+
+	</FOOTER>
+</html>

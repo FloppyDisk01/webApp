@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html ng-app = "todoApp">
+	<head>
+		<meta charset="utf-8" />
+		<title>toDo</title>
+
+	</head>
+	<body ng-controller = 'todoCtrl'>
+		<form ng-submit = 'addTask()'>
+			Votre tâche : <input type='text' ng-model='taskName'>
+			<input type="submit" value="Ajouter">
+		</form>
+		</br>
+		<div ng-repeat = "ta in taskSet" ng-class="{completed: todo.completed}"> 
+			<input class="mark" type="checkbox" ng-model="todo.completed" />
+			+ {{ta.taskName}}
+			<span class="close" ng-click="removeTodo(todo)">[x]</span>
+		</div>
+
+		<input id="mark-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)" />
+		<label class="btn btn-info" for="mark-all">Tout cocher</label>
+		<button class="btn btn-danger" ng-click="clearCompletedTodos()">Supprimer les tâches cochées</button>
+				
+		<script src="angular.min.js"></script>
+		<script src="js\todo.js"></script>
+	</body>
+</html>
+
+<!--https://www.tutoriel-angularjs.fr/tutoriel/1-decouverte-d-angularjs/5-votre-premier-module-angularjs-->
