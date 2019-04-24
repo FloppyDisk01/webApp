@@ -14,6 +14,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
 route(app);
 dataLayer.init(function(){
-      app.listen(8080);
+      const port = process.env.PORT || 8080
+      app.listen(port);
       console.log("on utilise le port: 8080");
 });
