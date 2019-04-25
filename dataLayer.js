@@ -61,6 +61,17 @@ var dataLayer = {
       });
     },
 
+    deleteTaskList : function(id_list, cb) {
+      var query = {
+        parent : new ObjectId(id_list)
+      };
+
+      db.collection(taskCol).deleteMany(query, function(err) {
+        if(err) throw err;
+        cb();
+      });
+    },
+
     modifyTask : function(id, data, cb){
       var thisId = {
         _id : new ObjectId(id)

@@ -55,7 +55,6 @@ var appRoute = function(app){
   app.post('/api/createList/:userName', function(req, res) {
     data = {
       nomListe : req.body.name,
-      createur : req.body.auth,
       user : req.params.userName
     }
     dataLayer.addList(data, function(err){
@@ -70,7 +69,6 @@ var appRoute = function(app){
   app.put('/api/modifyList', function(req, res) {
     data = {
       nomListe : req.body.nomListe,
-      createur : req.body.createur,
     }
     userName = req.body.user;
     dataLayer.modifyList(req.body._id, data, function(err){
@@ -85,11 +83,13 @@ var appRoute = function(app){
   app.delete('/api/deleteList/:user/:list_id', function(req, res) {
     userName = req.params.user;
     dataLayer.deleteList(req.params.list_id, function(err){
-      if(err) res.send(err);
-      dataLayer.getListSet(userName, function(list){
-        res.send(list);
+      dataLayer.deleteTaskList(req.params.list_id, function(err){
+        if(err) res.send(err);
+          dataLayer.getListSet(userName, function(list){
+            res.send(list);
+          });
+        });
       });
-    });
   });
 
   //recupération de taches
