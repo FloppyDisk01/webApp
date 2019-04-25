@@ -1,4 +1,4 @@
-# MongoExpressAngularNode
+# Projet Todo List
+lien heroku : http://poly-todo.herokuapp.com
 
-Voilà! this is a basic program of Mongo.Express.Node.Angular. 
-This repo is created as the support of TD n TP App web n Mobile Polytech Marseille
+créer un utilisateur :  entrer identifiant + mot de passe puis cliquer sur s'enregistrer et enfin cliquer sur se connecter 
