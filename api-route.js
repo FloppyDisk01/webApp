@@ -2,6 +2,8 @@ var dataLayer = require('./dataLayer');
 var bcrypt = require('bcrypt');
 var saltRounds = 10;
 
+ObjectId = require('mongodb').ObjectID;
+
 var appRoute = function(app){
   app.get('/', function(req, res) {
       res.sendFile('./public/index.html');
@@ -47,7 +49,6 @@ var appRoute = function(app){
   app.get('/api/getList', function(req, res) {
     dataLayer.getListSet(function(list){
       res.send(list);
-      console.log("on a choppé la liste !");
     });
   });
 
@@ -80,25 +81,25 @@ var appRoute = function(app){
   });
 
   //recupération de liste
-  app.get('/api/getTask', function(req, res) {
-    parent = req.body.parent;
-    dataLayer.getTaskSet(function(list, parent){
+  app.post('/api/getTask/:list_id', function(req, res) {
+    parent = new ObjectId(req.params.list_id);
+    dataLayer.getTaskSet(parent, function(list){
       res.send(list);
     });
   });
 
   //création de tâche
-  app.post('/api/createTask', function(req, res) {
+  app.post('/api/createTask/', function(req, res) {
     data = {
       text : req.body.text,
       author : req.body.auth,
       date : new Date(),
       done : false,
-      parent : req.body.parent
+      parent : new ObjectId(req.body.parent)
     }
     dataLayer.addTask(data, function(err){
       if(err) res.send(err);
-      dataLayer.getTaskSet(function(list){
+      dataLayer.getTaskSet(data.parent,function(list){
         res.send(list);
       });
     });
@@ -111,19 +112,21 @@ var appRoute = function(app){
       author : req.body.author,
       date : new Date(),
     }
+    parent = new ObjectId(req.body.parent);
     dataLayer.modifyTask(req.body._id, data, function(err){
       if(err) res.send(err);
-      dataLayer.getTaskSet(function(list){
+      dataLayer.getTaskSet(parent, function(list){
         res.send(list);
       });
     });
   });
 
   //suppression de tâche
-  app.delete('/api/deleteTask/:liste_id', function(req, res) {
-    dataLayer.deleteTask(req.params.liste_id, function(err){
+  app.delete('/api/deleteTask/:list_id/:task_id', function(req, res) {
+    parent = new ObjectId(req.params.list_id);
+    dataLayer.deleteTask(req.params.task_id, function(err){
       if(err) res.send(err);
-      dataLayer.getTaskSet(function(list){
+      dataLayer.getTaskSet(parent, function(list){
         res.send(list);
       });
     });

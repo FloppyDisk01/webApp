@@ -5,7 +5,7 @@ function mainController($scope, $http, $cookies) {
     $scope.formData = {};
     $scope.parent = $cookies.idListe;
     // when landing on the page, get all todos and show them
-    $http.get('/api/getTask', $scope.parent)
+    $http.post('/api/getTask/' + $scope.parent)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -32,8 +32,8 @@ function mainController($scope, $http, $cookies) {
     };
 
     // delete a todo after checking it
-    $scope.deleteTodo = function(id) {
-        $http.delete('/api/deleteTask/' + id)
+    $scope.deleteTodo = function(ListId, TaskId) {
+        $http.delete('/api/deleteTask/' + ListId + '/' + TaskId)
             .success(function(data) {
                 $scope.laliste = data;
                 console.log(data);

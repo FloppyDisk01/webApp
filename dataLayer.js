@@ -34,7 +34,7 @@ var dataLayer = {
       });
     },
 
-    getTaskSet : function(cb, parent){
+    getTaskSet : function(parent, cb){
       //on recupère tous les elements de la collection
       db.collection(taskCol).find({'parent':parent}).toArray(function(err, list){
         if(err) throw err;

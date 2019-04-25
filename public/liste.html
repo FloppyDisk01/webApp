@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Liste Choses à Faire</title>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-cookies.js"></script>
     <script src="liste.js"></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -19,7 +20,7 @@
               <input type="checkbox" ng-click="checkTask(x._id)">
                 <input type="text" ng-model="x.text"> <input type="text" ng-model="x.author">
                 <label>{{x.date| date:'dd/MM/yyyy à HH:mm'}}</label>
-              <button ng-click="deleteTodo(x._id)"> x </button><button ng-click="modifyTask(x)"> modifier </button>
+              <button ng-click="deleteTodo(x.parent, x._id)"> x </button><button ng-click="modifyTask(x)"> modifier </button>
             </h5>
         </div>
     </div>
