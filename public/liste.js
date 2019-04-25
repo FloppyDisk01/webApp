@@ -1,11 +1,11 @@
-// public/core.js
-var ListeaFaire = angular.module('ListeaFaire', []);
 
-function mainController($scope, $http) {
+var ListeaFaire = angular.module('ListeaFaire', ['ngCookies']);
+
+function mainController($scope, $http, $cookies) {
     $scope.formData = {};
-
+    $scope.parent = $cookies.idListe;
     // when landing on the page, get all todos and show them
-    $http.get('/api/getList')
+    $http.get('/api/getTask', $scope.parent)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -19,15 +19,16 @@ function mainController($scope, $http) {
       if(!($scope.formData.auth)){
         $scope.formData.auth = "inconnu";
       }
-        $http.post('/api/createTask', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {}; // clear the form so our user is ready to enter another
-                $scope.laliste = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
+      $scope.formData.parent = $scope.parent;
+      $http.post('/api/createTask', $scope.formData)
+          .success(function(data) {
+              $scope.formData = {}; // clear the form so our user is ready to enter another
+              $scope.laliste = data;
+              console.log(data);
+          })
+          .error(function(data) {
+              console.log('Error: ' + data);
+          });
     };
 
     // delete a todo after checking it

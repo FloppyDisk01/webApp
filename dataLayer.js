@@ -7,6 +7,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 var db;
 var dbName = "AppListe";
 var taskCol = "tache";
+var listCol = "Liste";
 var userCol = "utilisateur";
 
 var dataLayer = {
@@ -20,7 +21,6 @@ var dataLayer = {
     },
 
     createUser: function(user,cb){
-      console.log('est ce que ce truc sert a qqch ?');
       db.collection(userCol).insertOne(user, function(err){
         if(err) throw err;
         cb();
@@ -28,16 +28,15 @@ var dataLayer = {
     },
 
     getUser: function(userName,cb){
-      console.log('on cherche si '+userName+' existe');
       db.collection(userCol).findOne({userName},function(err, res){
         if(err) throw err;
         cb(err, res);
       });
     },
 
-    getTaskSet : function(cb){
+    getTaskSet : function(cb, parent){
       //on recupère tous les elements de la collection
-      db.collection(taskCol).find({}).toArray(function(err, list){
+      db.collection(taskCol).find({'parent':parent}).toArray(function(err, list){
         if(err) throw err;
         cb(list);
       });
@@ -67,6 +66,23 @@ var dataLayer = {
         _id : new ObjectId(id)
       }
       db.collection(taskCol).updateOne(thisId, {$set : data}, function(err){
+        if(err) throw err;
+        cb();
+      });
+    },
+
+    getListSet : function(cb){
+      //on recupère tous les elements de la collection
+      db.collection(listCol).find({}).toArray(function(err, list){
+        if(err) throw err;
+        cb(list);
+      });
+    },
+
+    addList : function(list, cb){
+      //on ajoute une tache
+      console.log("on crée une liste");
+      db.collection(listCol).insertOne(list, function(err){
         if(err) throw err;
         cb();
       });

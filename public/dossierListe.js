@@ -1,11 +1,11 @@
 // public/core.js
 var ListeaFaire = angular.module('ListeaFaire', ['ngCookies']);
 
-function folderControler($scope, $http, $cookies) {
+function folderControler($scope, $http, $cookies, $window) {
     $scope.formData = {};
 
     // when landing on the page, get all todos and show them
-    $http.get('/api/getListSet')
+    $http.get('/api/getList')
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -19,7 +19,7 @@ function folderControler($scope, $http, $cookies) {
       if(!($scope.formData.auth)){
         $scope.formData.auth = "inconnu";
       }
-        $http.post('/api/createListSet', $scope.formData)
+        $http.post('/api/createList', $scope.formData)
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.laliste = data;
@@ -32,7 +32,7 @@ function folderControler($scope, $http, $cookies) {
 
     // delete a todo after checking it
     $scope.deleteList = function(id) {
-        $http.delete('/api/deleteListSet/' + id)
+        $http.delete('/api/deleteList/' + id)
             .success(function(data) {
                 $scope.laliste = data;
                 console.log(data);
@@ -51,5 +51,11 @@ function folderControler($scope, $http, $cookies) {
           .error(function(data) {
               console.log('Error: ' + data);
           });
+    };
+
+    $scope.accessList = function(list) {
+        $cookies.idListe = list;
+        console.log("on change de fenetre");
+        $window.location.replace('/liste.html');
     };
 }

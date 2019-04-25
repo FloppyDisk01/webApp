@@ -44,7 +44,7 @@ var appRoute = function(app){
   });
 
   //recupération de liste
-  app.get('/api/getListSet', function(req, res) {
+  app.get('/api/getList', function(req, res) {
     dataLayer.getListSet(function(list){
       res.send(list);
       console.log("on a choppé la liste !");
@@ -80,10 +80,10 @@ var appRoute = function(app){
   });
 
   //recupération de liste
-  app.get('/api/getList', function(req, res) {
-    dataLayer.getTaskSet(function(list){
+  app.get('/api/getTask', function(req, res) {
+    parent = req.body.parent;
+    dataLayer.getTaskSet(function(list, parent){
       res.send(list);
-      console.log("on a choppé la liste !");
     });
   });
 
@@ -93,7 +93,8 @@ var appRoute = function(app){
       text : req.body.text,
       author : req.body.auth,
       date : new Date(),
-      done : false
+      done : false,
+      parent : req.body.parent
     }
     dataLayer.addTask(data, function(err){
       if(err) res.send(err);
