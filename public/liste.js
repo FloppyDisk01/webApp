@@ -4,6 +4,7 @@ var ListeaFaire = angular.module('ListeaFaire', ['ngCookies']);
 function mainController($scope, $http, $cookies) {
     $scope.formData = {};
     $scope.parent = $cookies.idListe;
+    $scope.nameDefault = $cookies.userId;
     // when landing on the page, get all todos and show them
     $http.post('/api/getTask/' + $scope.parent)
         .success(function(data) {
@@ -17,7 +18,7 @@ function mainController($scope, $http, $cookies) {
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
       if(!($scope.formData.auth)){
-        $scope.formData.auth = "inconnu";
+        $scope.formData.auth = $scope.nameDefault;
       }
       $scope.formData.parent = $scope.parent;
       $http.post('/api/createTask', $scope.formData)

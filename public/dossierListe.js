@@ -3,9 +3,10 @@ var ListeaFaire = angular.module('ListeaFaire', ['ngCookies']);
 
 function folderControler($scope, $http, $cookies, $window) {
     $scope.formData = {};
+    $scope.user = $cookies.userId;
 
     // when landing on the page, get all todos and show them
-    $http.get('/api/getList')
+    $http.get('/api/getList/' + $scope.user)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -17,22 +18,24 @@ function folderControler($scope, $http, $cookies, $window) {
     // when submitting the add form, send the text to the node API
     $scope.createList = function() {
       if(!($scope.formData.auth)){
-        $scope.formData.auth = "inconnu";
+        $scope.formData.auth = $scope.user;
       }
-        $http.post('/api/createList', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {}; // clear the form so our user is ready to enter another
-                $scope.laliste = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
+      $scope.formData.user = $scope.user;
+      $http.post('/api/createList/'+ $scope.user, $scope.formData)
+          .success(function(data) {
+              $scope.formData = {}; // clear the form so our user is ready to enter another
+              $scope.laliste = data;
+              console.log(data);
+          })
+          .error(function(data) {
+              console.log('Error: ' + data);
+          });
     };
 
     // delete a todo after checking it
-    $scope.deleteList = function(id) {
-        $http.delete('/api/deleteList/' + id)
+    $scope.deleteList = function(user, listId) {
+      console.log("on tente de supprimer");
+        $http.delete('/api/deleteList/' + user + '/' + listId)
             .success(function(data) {
                 $scope.laliste = data;
                 console.log(data);
@@ -42,9 +45,9 @@ function folderControler($scope, $http, $cookies, $window) {
             });
     };
 
-    //modify a task
-    $scope.modifyList = function(task){
-      $http.put('/api/modifyList', task)
+    //modify a list
+    $scope.modifyList = function(list){
+      $http.put('/api/modifyList', list)
           .success(function(data) {
               console.log(data);
           })

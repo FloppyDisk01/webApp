@@ -35,10 +35,8 @@ var appRoute = function(app){
       if(err) res.send(err);
       if(user){
         bcrypt.compare(req.body.password, user.password, function(err, check) {
-          console.log(check);
           if(check){
             res.send(true);
-            console.log('good id bro');
           }
         });
       }
@@ -46,21 +44,23 @@ var appRoute = function(app){
   });
 
   //recupération de liste
-  app.get('/api/getList', function(req, res) {
-    dataLayer.getListSet(function(list){
+  app.get('/api/getList/:userName', function(req, res) {
+    userId = req.params.userName;
+    dataLayer.getListSet(userId, function(list){
       res.send(list);
     });
   });
 
   //création de liste
-  app.post('/api/createList', function(req, res) {
+  app.post('/api/createList/:userName', function(req, res) {
     data = {
       nomListe : req.body.name,
-      createur : req.body.auth
+      createur : req.body.auth,
+      user : req.params.userName
     }
     dataLayer.addList(data, function(err){
       if(err) res.send(err);
-      dataLayer.getListSet(function(list){
+      dataLayer.getListSet(data.user, function(list){
         res.send(list);
       });
     });
@@ -69,18 +69,30 @@ var appRoute = function(app){
   //modification de Liste
   app.put('/api/modifyList', function(req, res) {
     data = {
-      nomListe : req.body.name,
-      createur : req.body.auth
+      nomListe : req.body.nomListe,
+      createur : req.body.createur,
     }
+    userName = req.body.user;
     dataLayer.modifyList(req.body._id, data, function(err){
       if(err) res.send(err);
-      dataLayer.getListSet(function(list){
+      dataLayer.getListSet(userName, function(list){
         res.send(list);
       });
     });
   });
 
-  //recupération de liste
+  //suppression de liste
+  app.delete('/api/deleteList/:user/:list_id', function(req, res) {
+    userName = req.params.user;
+    dataLayer.deleteList(req.params.list_id, function(err){
+      if(err) res.send(err);
+      dataLayer.getListSet(userName, function(list){
+        res.send(list);
+      });
+    });
+  });
+
+  //recupération de taches
   app.post('/api/getTask/:list_id', function(req, res) {
     parent = new ObjectId(req.params.list_id);
     dataLayer.getTaskSet(parent, function(list){

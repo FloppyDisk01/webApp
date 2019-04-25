@@ -8,8 +8,7 @@ function loginController($scope, $http, $window, $cookies) {
     }
     $http.post('/login/', user)
     .success(function(cb) {
-      $cookies['userName'] = user.userName
-      console.log("on change de fenetre");
+      $cookies.userId = user.userName;
       $window.location.replace('/dossierListe.html');
     })
     .error(function(){

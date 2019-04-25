@@ -71,9 +71,9 @@ var dataLayer = {
       });
     },
 
-    getListSet : function(cb){
+    getListSet : function(user, cb){
       //on recupère tous les elements de la collection
-      db.collection(listCol).find({}).toArray(function(err, list){
+      db.collection(listCol).find({'user':user}).toArray(function(err, list){
         if(err) throw err;
         cb(list);
       });
@@ -86,7 +86,29 @@ var dataLayer = {
         if(err) throw err;
         cb();
       });
-    }
+    },
+
+    modifyList : function(id, data, cb){
+      var thisId = {
+        _id : new ObjectId(id)
+      }
+      db.collection(listCol).updateOne(thisId, {$set : data}, function(err){
+        if(err) throw err;
+        cb();
+      });
+    },
+
+    deleteList : function(id, cb){
+      //on supprime une tache
+      console.log("on essaye de supprimer dans datalayer");
+      var thisId = {
+        _id : new ObjectId(id)
+      }
+      db.collection(listCol).deleteOne(thisId, function(err){
+        if(err) throw err;
+        cb();
+      });
+    },
 
 }
 
